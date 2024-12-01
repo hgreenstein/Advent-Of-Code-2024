@@ -19,20 +19,26 @@ func main() {
 }
 
 func parseLines(textData []byte) (firstNums, secondNums []int) {
-	splitLines, curLine := make([][]byte, 0), make([]byte, 0, 5)
-	for _, c := range textData {
-		if c == '\n' {
+	splitLines, curLine := make([][]byte, 0), make([]byte, 0, 13) //Input lines are 13 chars, 2 * 5 digit numbers with 3 spaces between
+	for byteIndex := 0; byteIndex < len(textData); {
+		currentByte := textData[byteIndex]
+		if currentByte == '\n' {
 			splitLines = append(splitLines, curLine)
-			curLine = make([]byte, 0, 5)
+			curLine = make([]byte, 0, 13)
 		} else {
-			if c == ' ' {
+			if currentByte == ' ' {
 				if len(curLine) > 0 && curLine[len(curLine)-1] != ',' {
 					curLine = append(curLine, ',')
 				}
+				for byteIndex < len(textData) && textData[byteIndex] == ' ' { //Skip past all spaces
+					byteIndex++
+				}
+				continue //Don't do the extra increment at the end, we are already at the next char
 			} else {
-				curLine = append(curLine, c)
+				curLine = append(curLine, currentByte)
 			}
 		}
+		byteIndex++
 	}
 	splitLines = append(splitLines, curLine)
 	firstNums, secondNums = make([]int, 0, len(splitLines)), make([]int, 0, len(splitLines))
@@ -65,7 +71,7 @@ func part1(textData []byte) {
 	firstNums, secondNums := parseLines(textData)
 	sort.Ints(firstNums)
 	sort.Ints(secondNums)
-	fmt.Println(firstNums, secondNums)
+	// fmt.Println(firstNums, secondNums)
 	total := 0
 	for i, num := range firstNums {
 		diff := int(math.Abs(float64(num - secondNums[i])))
