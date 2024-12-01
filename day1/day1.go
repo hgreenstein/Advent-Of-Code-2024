@@ -18,7 +18,7 @@ func main() {
 	part2(textData)
 }
 
-func part1(textData []byte) {
+func parseLines(textData []byte) (firstNums, secondNums []int) {
 	splitLines, curLine := make([][]byte, 0), make([]byte, 0, 5)
 	for _, c := range textData {
 		if c == '\n' {
@@ -35,7 +35,7 @@ func part1(textData []byte) {
 		}
 	}
 	splitLines = append(splitLines, curLine)
-	firstNums, secondNums := make([]int, 0, len(splitLines)), make([]int, 0, len(splitLines))
+	firstNums, secondNums = make([]int, 0, len(splitLines)), make([]int, 0, len(splitLines))
 	for _, line := range splitLines {
 		firstNum, secondNum := 0, 0
 		var err error
@@ -58,6 +58,11 @@ func part1(textData []byte) {
 		firstNums = append(firstNums, firstNum)
 		secondNums = append(secondNums, secondNum)
 	}
+	return firstNums, secondNums
+}
+
+func part1(textData []byte) {
+	firstNums, secondNums := parseLines(textData)
 	sort.Ints(firstNums)
 	sort.Ints(secondNums)
 	fmt.Println(firstNums, secondNums)
@@ -71,46 +76,7 @@ func part1(textData []byte) {
 }
 
 func part2(textData []byte) {
-	//Still need to split the lines by number the same as part 1
-	splitLines, curLine := make([][]byte, 0), make([]byte, 0, 5)
-	for _, c := range textData {
-		if c == '\n' {
-			splitLines = append(splitLines, curLine)
-			curLine = make([]byte, 0, 5)
-		} else {
-			if c == ' ' {
-				if len(curLine) > 0 && curLine[len(curLine)-1] != ',' {
-					curLine = append(curLine, ',')
-				}
-			} else {
-				curLine = append(curLine, c)
-			}
-		}
-	}
-	splitLines = append(splitLines, curLine)
-	firstNums, secondNums := make([]int, 0, len(splitLines)), make([]int, 0, len(splitLines))
-	for _, line := range splitLines {
-		firstNum, secondNum := 0, 0
-		var err error
-		var sb strings.Builder
-		for _, c := range line {
-			if c == ',' {
-				firstNum, err = strconv.Atoi(sb.String())
-				if err != nil {
-					panic(err)
-				}
-				sb.Reset()
-			} else {
-				sb.WriteByte(c)
-			}
-		}
-		secondNum, err = strconv.Atoi(sb.String())
-		if err != nil {
-			panic(err)
-		}
-		firstNums = append(firstNums, firstNum)
-		secondNums = append(secondNums, secondNum)
-	}
+	firstNums, secondNums := parseLines(textData)
 	secondNumFreqMap := make(map[int]int, len(secondNums))
 	for _, num := range secondNums {
 		secondNumFreqMap[num]++
