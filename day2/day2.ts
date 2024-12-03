@@ -8,26 +8,6 @@ function part1() {
     return splitReport.map((element) => Number.parseInt(element));
   });
   const validReports = intReports.reduce((acc, currentReport) => {
-    // const correctDirection =
-    //   currentReport[0] > currentReport[1]
-    //     ? (a: number, b: number) => a > b
-    //     : (a: number, b: number) => a < b;
-    // for (let i = 0; i < currentReport.length - 1; i++) {
-    //   if (!correctDirection(currentReport[i], currentReport[i + 1])) {
-    //     // console.log(
-    //     //   `Direction check failed at index ${i} for report ${currentReport}`
-    //     // );
-    //     return acc;
-    //   }
-    //   const absDiff = Math.abs(currentReport[i] - currentReport[i + 1]);
-    //   if (absDiff > 3 || absDiff === 0) {
-    //     // console.log(
-    //     //   `Difference check failed at index ${i} for report ${currentReport}`
-    //     // );
-    //     return acc;
-    //   }
-    // }
-    // return ++acc;
     if (isValidReport(currentReport)) {
       return ++acc;
     }
