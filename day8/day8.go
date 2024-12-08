@@ -56,22 +56,22 @@ func part2(charCoordMap map[byte][]Coord, ROWS, COLS int, antiNodeMap map[Coord]
 				x2, y2 := nextCoord.X-xDiff, nextCoord.Y-yDiff
 
 				for inBounds(x1, y1, ROWS, COLS) {
-					x := Coord{
+					additionAntiNode := Coord{
 						X: x1,
 						Y: y1,
 					}
-					if _, ok := antiNodeMap[x]; !ok {
-						antiNodeMap[x] = true
+					if _, ok := antiNodeMap[additionAntiNode]; !ok {
+						antiNodeMap[additionAntiNode] = true
 					}
 					x1, y1 = x1+xDiff, y1+yDiff
 				}
 				for inBounds(x2, y2, ROWS, COLS) {
-					y := Coord{
+					subtractionAntiNode := Coord{
 						X: x2,
 						Y: y2,
 					}
-					if _, ok := antiNodeMap[y]; !ok {
-						antiNodeMap[y] = true
+					if _, ok := antiNodeMap[subtractionAntiNode]; !ok {
+						antiNodeMap[subtractionAntiNode] = true
 					}
 					x2, y2 = x2-xDiff, y2-yDiff
 				}
@@ -95,21 +95,21 @@ func part1(charCoordMap map[byte][]Coord, ROWS int, COLS int, antiNodeMap map[Co
 				x2, y2 := nextCoord.X-xDiff, nextCoord.Y-yDiff
 
 				if inBounds(x1, y1, ROWS, COLS) {
-					x := Coord{
+					antiNode1 := Coord{
 						X: x1,
 						Y: y1,
 					}
-					if _, ok := antiNodeMap[x]; !ok {
-						antiNodeMap[x] = true
+					if _, ok := antiNodeMap[antiNode1]; !ok {
+						antiNodeMap[antiNode1] = true
 					}
 				}
 				if inBounds(x2, y2, ROWS, COLS) {
-					y := Coord{
+					antiNode2 := Coord{
 						X: x2,
 						Y: y2,
 					}
-					if _, ok := antiNodeMap[y]; !ok {
-						antiNodeMap[y] = true
+					if _, ok := antiNodeMap[antiNode2]; !ok {
+						antiNodeMap[antiNode2] = true
 					}
 				}
 			}
