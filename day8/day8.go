@@ -36,12 +36,7 @@ func main() {
 	}
 	ROWS, COLS := len(grid), len(grid[0])
 	antiNodeMap := make(map[Coord]bool)
-	// fmt.Println(coordSlice)
-	// fmt.Printf("i %v length %v\n", i, len(coordSlice))
-	// fmt.Printf("j %v\n", j)
-	//3-5, 4-5 = -2, -1
-	//1, 3
-	// fmt.Println(x1, y1, x2, y2)
+
 	part1(charCoordMap, ROWS, COLS, antiNodeMap)
 	antiNodeMap = make(map[Coord]bool)
 	part2(charCoordMap, ROWS, COLS, antiNodeMap)
