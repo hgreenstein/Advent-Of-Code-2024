@@ -73,6 +73,13 @@ func dfs(row, col int, targetVal byte, path []string) {
 	return
 }
 
+type CoordinateWithTarget struct {
+	Coordinate
+	TargetVal byte
+}
+
+var part2DP map[CoordinateWithTarget]int = map[CoordinateWithTarget]int{}
+
 func dfsPart2(row, col int, targetVal byte) int {
 	if !inBounds(row, col) {
 		return 0
@@ -84,12 +91,23 @@ func dfsPart2(row, col int, targetVal byte) int {
 	if targetVal == '9' {
 		return 1
 	}
+	curCoordinate := CoordinateWithTarget{
+		Coordinate: Coordinate{
+			X: row,
+			Y: col,
+		},
+		TargetVal: targetVal,
+	}
+	if dpVal, ok := part2DP[curCoordinate]; ok {
+		return dpVal
+	}
 	result := 0
 	for _, direction := range directions {
 		nextX, nextY := row+direction[0], col+direction[1]
 		// fmt.Printf("Moving from cell %v, %v to cell %v, %v with target value %c\n", row, col, nextX, nextY, targetVal+1)
 		result += dfsPart2(nextX, nextY, targetVal+1)
 	}
+	part2DP[curCoordinate] = result
 	return result
 }
 
